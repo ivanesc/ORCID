@@ -1,0 +1,32 @@
+<section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
+      <div class="wmod1-100">
+        <h2 class="mb-5">Perfil</h2>
+        <h3 class="mb-1">{{apellidos}}, &nbsp; {{nombre}}</h3>
+        <div class="subheading mb-5">{{posición}}</div>
+        <p class="lead mb-4">{{descripción}}</p>
+        <div class="subheading">ID ORCID: {{orcidID}}</div>
+      </div>
+</section>
+
+    <hr class="m-0">
+
+<section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="experience">
+      <div class="wmod1-100">
+        <h2 class="mb-5">Publicaciones</h2>
+        {{#each experiencia}}
+
+        <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+          <div class="resume-content">
+            <h3 class="mb-0">{{publicacion.titulo}}</h3>
+            <div class="subheading mb-3">{{publicacion.tipo}}</div>
+            <p class="doi">doi &nbsp {{publicacion.doi}}</p>
+            <p class="doi">eid &nbsp {{publicacion.eid}}</p>
+          </div>
+          <div class="resume-date text-md-right">
+            <span class="text-primary">{{publicacion.fecha}}</span>
+          </div>
+        </div>
+
+        {{/each}}
+      </div>
+</section>

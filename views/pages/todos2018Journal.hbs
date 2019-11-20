@@ -1,0 +1,27 @@
+<h2 class="mt-5 mb-5">Publicaciones 2018 - Artículos Revista</h2>
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10">
+    <table id="table_id" class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="text-center">Título</th>
+                <th class="text-center">Año</th>
+                <th class="text-center">Tipo</th>
+                <th class="text-center">DOI</th>
+                <th class="text-center">EID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each validos}}
+            <tr>
+                <td class="text-center">{{titulo}}</td>
+                <td>{{año}}</td>
+                <td>{{tipo}}</td>
+                <td class="doi text-center">{{DOI}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+  </div>
+</div>
+<hr>

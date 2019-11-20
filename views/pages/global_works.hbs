@@ -1,0 +1,65 @@
+<section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="experience">
+      <div class="wmod2-100">
+        <h2 class="mb-5">Publicaciones</h2>
+
+{{#each fechasFinal}} 
+
+                <!--Accordion wrapper-->
+                <div class="accordion md-accordion accordion-3 z-depth-1-half" id="accordionEx194" role="tablist"
+                            aria-multiselectable="true">
+
+                    <hr class="mb-0">
+
+                    <!-- Accordion card -->
+                    <div class="card">
+
+                        <!-- Card header -->
+                        <div class="card-header" role="tab" id="heading{{@key}}">
+                            <a data-toggle="collapse" data-parent="#accordionEx194" href="#collapse{{@key}}" aria-expanded="false"
+                                    aria-controls="collapse{{@key}}">
+                                <h3 class="mb-0 mt-3 red-text">
+                                    {{@key}} <i class="fas fa-angle-down rotate-icon fa-1x"></i>
+                                </h3>
+                            </a>
+                        </div>
+
+                        <!-- Card body -->
+                        <div id="collapse{{@key}}" class="collapse show" role="tabpanel" aria-labelledby="heading{{@key}}"
+                                data-parent="#accordionEx194">
+                            <div class="card-body pt-0">
+                                {{#each this}}
+                                    <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                                        <div class="resume-content">
+                                            <h3 class="mb-0">{{publicacion.titulo}}</h3>
+                                            <div class="subheading mb-3">{{publicacion.tipo}}</div>
+                                            <p class="doi">doi &nbsp {{publicacion.doi}}</p>
+                                            <p class="doi">eid &nbsp {{publicacion.eid}}</p>
+                                        </div>
+                                    </div>
+                        
+                                {{/each}}
+                                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/.Accordion wrapper-->
+
+                <!-- <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="resume-content">
+                        <h3 class="mb-0">{{title.title.value}}</h3>
+                        <div class="subheading mb-3">{{type}}</div>
+                            {{#external-ids.external-id}}
+
+                        <p class="doi">{{external-id-type}} &nbsp {{external-id-value}}</p>
+
+                            {{/external-ids.external-id}}
+                    </div>
+                    <div class="resume-date text-md-right">
+                        <span class="fecha text-primary">{{publication-date.year.value}}</span>
+                    </div>
+                </div> -->
+
+{{/each}} 
+</div>
+</section>

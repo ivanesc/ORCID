@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+
+  mongo-seed:
+    image: mongo
+    volumes: 
+      - ./bdOrcidIDs:/scriptBDOrcid
+    command: mongoimport --host mongodb --db Orcid --collection membersOrcid --file /scriptBDOrcid/orcid.json
+
+  orcid:
+    image: orcidmongonodexpress
+    build: .
+    links:
+      - mongo-seed
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3800:3800
