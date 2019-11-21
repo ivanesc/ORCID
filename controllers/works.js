@@ -318,7 +318,6 @@ function getAllJournalMemberWorks2018(req, res, next) {
     let trabajo;
     let contadorMiembros = 0;
 
-    let orcidIDs = [];
     const allWorks = [];
 
     function delay() {

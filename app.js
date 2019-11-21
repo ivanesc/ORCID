@@ -21,7 +21,8 @@ var app = express();
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(methodOverride());
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+//app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/membersCEATIC/assets', express.static(__dirname + '/assets'));
 
 app.set('views',path.join(__dirname,'views')); //esta línea hace lo mismo en general que lo comentado dos líneas más abajo
 app.set('view engine','hbs');
