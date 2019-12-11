@@ -83,10 +83,11 @@ var actualizaPublicacionesOrcid = (req, res, next) => {
 
                                                             try {
                                                                 await publicacion.save(async (error, trabajo2) => {
+                                                                    //esto solo lo hacemos en caso de que queramos sacar cada trabajo de manera individual por la salida
                                                                     trabajo = { titulo: works[datos1].group[datos2]['work-summary'][datos3].title.title.value, tipo: works[datos1].group[datos2]['work-summary'][datos3].type, fecha: works[datos1].group[datos2]['work-summary'][datos3]['publication-date'].year.value, doi: doieid[0], eid: doieid[1] }
                                                                     //en caso de encontrarse el trabajo en la BD no se vuelve a insertar y se guarda su id de referencia en la lista de trabajos del miembro que corresponda
                                                                     if (error) {
-                                                                        console.log("Trabajo: " + trabajo.titulo + " Fecha: " + trabajo.fecha + " OrcidID: " + id);
+                                                                        //console.log("Trabajo: " + trabajo.titulo + " Fecha: " + trabajo.fecha + " OrcidID: " + id);
                                                                         let actualizaRepetido = async (trabajo3) => {
                                                                             try {
                                                                                 await miembroOrcid.findOneAndUpdate({
@@ -136,7 +137,7 @@ var actualizaPublicacionesOrcid = (req, res, next) => {
                                                                         }
                                                                     }
                                                                 })
-                                                                return res.status(200).send("Datos ORCID de CEATIC actualizados correctamente");
+                                                                //return res.status(200).send("Datos ORCID de CEATIC actualizados correctamente");
                                                             }
                                                             catch (error) {
                                                                 console.log("Detalles de error " + error.message);
@@ -154,6 +155,7 @@ var actualizaPublicacionesOrcid = (req, res, next) => {
                                 res.status(error.status).send({ Mensaje: error.message });
                             });
                     }
+                    return res.status(200).send("Datos ORCID de CEATIC actualizados correctamente");
                 })
                 .catch(console.error);
         } else {
@@ -177,7 +179,7 @@ async function getAllMemberWorks(req, res, next) {
         for ( let key in obj ) {
             resultado.push( obj[key] );
         }
-        console.log(resultado[0][0]);
+        //console.log(resultado[0][0]);
         return resultado
     }
  
@@ -189,14 +191,14 @@ async function getAllMemberWorks(req, res, next) {
         for (let i=obj.length-1; i>=0; i--) {
             resultado.push( obj[i] );
         }
-        console.log(resultado[0][0]);
+        //console.log(resultado[0][0]);
         return resultado;
     }
 
     var obtenerTrabajosAño = async (fechas2) => {
         for (let fecha in fechas2) {
             try {
-                await publicacionOrcid.find({ 'publicacion.fecha': fechas2[fecha] }, { 'publicacion.titulo': 1, 'publicacion.tipo': 1, 'publicacion.fecha': 1, 'publicacion.doi': 1, 'publicacion.eid': 1, '_id': 0 }, (error, publ) => {
+                await publicacionOrcid.find({ 'publicacion.fecha': fechas2[fecha] }, { 'publicacion.titulo': 1, 'publicacion.tipo': 1, 'publicacion.fecha': 1, 'publicacion.doi': 1, 'publicacion.eid': 1, '_id': 0 }, {limit: 10}, (error, publ) => {
                     if(error){
                         return console.error;
                     }
@@ -215,51 +217,57 @@ async function getAllMemberWorks(req, res, next) {
         return publiFecha;
     }
 
-    await publicacionOrcid.distinct('publicacion.fecha', async (err, fechas) => {
-        if (err) {
-            return res.status(500).send({ message: 'Error en el servidor' });
-        }
-        // Devolvemos el resultado de las distintas fechas del array ordenadas de mayor a menor
-        else if (fechas) {
+    try{
+        await publicacionOrcid.distinct('publicacion.fecha', async (err, fechas) => {
+            if (err) {
+                return res.status(500).send({ message: 'Error en el servidor' });
+            }
+            // Devolvemos el resultado de las distintas fechas del array ordenadas de mayor a menor
+            else if (fechas) {
 
-            fechas.sort(function (a, b) { return b - a });
-            //console.log(fechas);
+                fechas.sort(function (a, b) { return b - a });
+                let fechas2 = fechas.slice(0,10);
+                //console.log(fechas2);
 
-            let todasPubli = await obtenerTrabajosAño(fechas);
+                let todasPubli = await obtenerTrabajosAño(fechas2);
 
-            if(todasPubli.length !== undefined){
-                for(let año of fechas){
-                    for(let trabajo of todasPubli){
-                        if(trabajo[0].publicacion.fecha == año){
-                            fechasFinal[año] = trabajo;
+                if(todasPubli.length !== undefined){
+                    for(let año of fechas2){
+                        for(let trabajo of todasPubli){
+                            if(trabajo[0].publicacion.fecha == año){
+                                fechasFinal[año] = trabajo;
+                            }
                         }
                     }
                 }
-            }
 
-            var jsonArr = Object.keys(fechasFinal).map(function(key) {
-                return [key,fechasFinal[key]];
-            });
+                var jsonArr = Object.keys(fechasFinal).map(function(key) {
+                    return [key,fechasFinal[key]];
+                });
                     
-            jsonArr = jsonArr.reverse();
+                jsonArr = jsonArr.reverse();
 
-            console.log(jsonArr);
+                console.log(jsonArr);
 
-            /*console.log(Object.keys(fechasFinal).reduce((accumulator, currentValue) => {
-                accumulator[currentValue] = fechasFinal[currentValue];
-                return accumulator;
-            }, {}));*/
+                /*console.log(Object.keys(fechasFinal).reduce((accumulator, currentValue) => {
+                    accumulator[currentValue] = fechasFinal[currentValue];
+                    return accumulator;
+                }, {}));*/
 
-            //console.log(fechasFinal[2019]);
-           
-            //console.log(typeof(todasPubli));
-            res.render('../views/pages/global_works', { datos: fechas, fechasFinal });
-        } else {
-            return res.status(404).send({
-                message: 'No hay ninguna fecha asociada a publicaciones de CEATIC'
-            });
-        }
-    })
+                //console.log(fechasFinal[2019]);
+                
+                //console.log(typeof(todasPubli));
+                res.render('../views/pages/global_works', { resultados: { trabajosOrdDesc: jsonArr, datos: fechas2 } });
+            } else {
+                return res.status(404).send({
+                    message: 'No hay ninguna fecha asociada a publicaciones de CEATIC'
+                });
+            }
+        })
+    }
+    catch (e) {
+        console.log(e.message);
+    }
 }
 
 // método para conseguir los trabajos en ORCID de un sólo miembro CEATIC con su OrcidId
@@ -279,7 +287,7 @@ async function getOneMemberWorks(req, res, next) {                   //en lugar 
             let prop2 = b[p_key1];
             let elem2 = parseInt(prop2[p_key2]);
             //console.log(typeof elem2);
-            console.log(elem1 + " " + elem2);
+            //console.log(elem1 + " " + elem2);
 
             return elem2 - elem1;
         });
