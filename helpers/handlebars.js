@@ -8,8 +8,10 @@ var register = Handlebars => {
             //return opts.fn(this);
         }
     },
-    foo: (var1, var2) => { //esto sería en caso de querer añadir otra función al helper global
-        return; 
+    if_eq2: (var1, var2) => { //esto sería en caso de querer añadir otra función al helper global
+        if(typeof var1 === var2){
+            return true; 
+        }
     }
 };
 
