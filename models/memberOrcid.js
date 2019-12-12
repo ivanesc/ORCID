@@ -32,11 +32,11 @@ var memberOrcidSchema = Schema({
             type: String,
             required: true,
             unique: true
-        },
+        }, 
         publicaciones: [{
             type: Schema.Types.ObjectId,
             ref: "trabajoOrcid"
-        }]
+        }] 
     }
 }, { collection: "membersOrcid" });
  
