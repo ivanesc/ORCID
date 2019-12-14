@@ -10,7 +10,7 @@ var register = Handlebars => {
     },
     if_eq2: (var1, var2) => { //esto sería en caso de querer añadir otra función al helper global
         if(typeof var1 === var2){
-            return true; 
+            return true;
         }
     }
 };
@@ -27,3 +27,4 @@ if (Handlebars && typeof Handlebars.registerHelper === "function") {
 
 module.exports.register = register;
 module.exports.helpers = register(null);
+

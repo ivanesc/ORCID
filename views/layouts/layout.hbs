@@ -20,10 +20,15 @@
 
     <!-- Custom styles for this template -->
     <link href="https://ceatic.ujaen.es/membersCEATIC/assets/css/resume.min.css" rel="stylesheet">
+
 </head>
 {{#if experiencia}}
-    {{> header}}
+    {{> header1}}
 {{/if}}
+{{#if resultados}}
+    {{> header2}}
+{{/if}}
+
 <body id="page-top">
     <div class="container-fluid p-0">
         {{{body}}}

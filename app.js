@@ -9,7 +9,7 @@ var methodOverride = require('method-override');
 var hbs = require('express-handlebars');
 
 // Importamos las rutas
-var users_routes = require('./routes/works');
+var works_routes = require('./routes/works');
 
 // Llamamos a express para poder crear el servidor
 var app = express();
@@ -21,10 +21,11 @@ var app = express();
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(methodOverride());
-//poner especial atención en esta línea puesto que aquí se define la url para coger bien los assets 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+//app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/membersCEATIC/assets', express.static(__dirname + '/assets'));
 
 app.set('views',path.join(__dirname,'views')); //esta línea hace lo mismo en general que lo comentado dos líneas más abajo
+app.set('view engine','hbs');
 app.engine( 'hbs', hbs( {
     helpers: require("./helpers/handlebars.js").helpers,
     extname: 'hbs',
@@ -32,11 +33,9 @@ app.engine( 'hbs', hbs( {
     //layoutsDir: __dirname + '/views/layouts/',
     //partialsDir: __dirname + '/views/partials/'
 }));
-app.set('view engine','hbs');
 
 // Cargamos las rutas
-app.use('/membersCEATIC', users_routes);
+app.use('/membersCEATIC', works_routes);
 
 // exportamos este módulo para poder usar la variable app fuera de este archivo
-// existen otras maneras de exportar variables al igual que métodos
 module.exports = app;
