@@ -1,3 +1,5 @@
+<span class="ir-arriba"><i class="fas fa-angle-up rotate-icon"></i></span>
+
 <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
       <div class="wmod1-100">
         <h2 class="mb-5">Perfil</h2>
@@ -13,18 +15,27 @@
 {{#if (if_eq2 experiencia "string")}}
   <section class="resume-section2 p-3 p-lg-5 d-flex justify-content-center" id="experience">
       <div class="wmod1-100">
-        <h2 class="mb-5">No hay publicaciones asociadas con este miembro científico</h2>
+        <h3 class="mb-5">{{experiencia}}</h3>
       </div>
   </section>
 {{else}}
     <section class="resume-section1 p-3 p-lg-5 d-flex justify-content-center" id="experience">
       <div class="wmod1-100">
-          <h2 class="mb-5">Publicaciones</h2>
+          <h2 class="mb-5">Publicaciones</h2> 
+      
+          <div class="input-group md-form form-sm form-1 pl-0 mb-5 search-pointer">
+            <div class="input-group-prepend">
+              <span class="input-group-text green lighten-2" id="basic-text1"><i class="fas fa-search text-black"
+                  aria-hidden="true"></i></span>
+            </div>
+            <input class="form-control my-0 py-1" type="text" placeholder="Busca por título publicación..." aria-label="Search">
+          </div>
+
           {{#each experiencia}}
 
-          <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
-            <div class="resume-content">
-              <h3 class="mb-0">{{publicacion.titulo}}</h3>
+          <div id="publ{{@index}}" class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+            <div class="resume-content resume-content-anchor">
+              <h3 class="titulo mb-0">{{publicacion.titulo}}</h3>
               <div class="subheading mb-3">{{publicacion.tipo}}</div>
               <p class="doi">doi &nbsp {{publicacion.doi}}</p>
               <p class="doi">eid &nbsp {{publicacion.eid}}</p>
@@ -36,5 +47,9 @@
 
         {{/each}}
       </div>
-  </section>
+    </section>
+
+    <div id="pager">
+      <ul id="pagination" class="pagination-sm"></ul>
+    </div>
   {{/if}}

@@ -1,11 +1,39 @@
+<span class="ir-arriba"><i class="fas fa-angle-up rotate-icon"></i></span>
+
 <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="experience">
       <div class="wmod2-100">
-        <h2 class="mb-5">Publicaciones</h2>
+        <span class="d-flex"><h2 class="mb-5">Publicaciones</h2> </span>
+        <span class="d-flex justify-content-md-start mb-3"><a href='javascript:window.print()'><img src='/assets/img/imprimir.png' width='60px' height='60px' alt='imprimir' /> </a>
+        &nbsp <a id="imprtodo" href='javascript:window.print()'>Imprimir todo</a> </span>
+
+        <div id="filters" class="d-flex justify-content-md-center flex-wrap mb-5">
+
+            {{#each tiposPubl}}
+
+                {{#if (if_eq @index 0)}}
+                    <div class="boton-linea-ext active">
+                {{else}}
+                    <div class="boton-linea-ext">
+                {{/if}}
+                        <span class="linea1"></span>
+                        <span class="linea2"></span>
+                        <span class="linea3"></span>
+                        <span class="linea4"></span>
+                    {{#if (if_eq @index 0)}}
+                        <span class="filter" data-mixitup-control data-filter="all">{{this}}</span>
+                    {{else}}
+                        <span class="filter" data-mixitup-control data-filter=".{{this}}">{{this}}</span>
+                    {{/if}}
+                </div>
+
+            {{/each}}
+
+        </div>
 
 {{#each resultados.datos}} 
 
                 <!--Accordion wrapper-->
-                <div class="accordion md-accordion accordion-3 z-depth-1-half" id="accordionEx194" role="tablist"
+                <div class="accordion md-accordion accordion-3 z-depth-1-half anchor-card" id="accordionEx194" role="tablist"
                             aria-multiselectable="true">
 
                     <hr class="mb-0">
@@ -30,8 +58,13 @@
                                 {{#each ../resultados.trabajosOrdDesc}} {{#if (if_eq @index @../index)}} {{#each this}} {{#each this}}
                                     <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
                                         <div class="resume-content">
-                                            <h3 class="mb-0">{{publicacion.titulo}}</h3>
-                                            <div class="subheading mb-3">{{publicacion.tipo}}</div>
+                                            <h3 class="mb-2">{{publicacion.titulo}}</h3>
+                                              {{#each publicacion.autores}}
+
+                                                    {{apellidos}}, {{nombre}}; 
+
+                                              {{/each}} 
+                                            <div class="subheading mt-3 mb-3 mix {{publicacion.tipo}}">{{publicacion.tipo}}</div>
                                             <p class="doi">doi &nbsp {{publicacion.doi}}</p>
                                             <p class="doi">eid &nbsp {{publicacion.eid}}</p>
                                         </div>

@@ -4,7 +4,7 @@
   "description": "Aplicación web para recuperar registros de datos de miembros científicos pertenecientes a CEATIC desde Orcid",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch index.js",
+    "start": "nodemon --exec babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ivanesc",
@@ -15,13 +15,17 @@
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
-    "hbs": "^4.0.4",
+    "hbs": "^4.1.0",
     "jwt-simple": "^0.5.6",
     "method-override": "^3.0.0",
     "mongoose": "^5.6.7",
+    "mongoose-unique-validator": "^2.0.3",
     "swagger-client": "^3.9.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.6",
     "nodemon": "^1.19.1"
   }
 }
