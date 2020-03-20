@@ -8,11 +8,11 @@ require('dotenv').config() //nos ahorramos poner una variable antes del require 
 // Cargamos el fichero app.js con la configuración de Express. Se podría hacer un import {app} from './app'
 var app = require('./app')
 // Creamos la variable PORT para indicar el puerto en el que va a funcionar el servidor
-var port = process.env.PORTDEV || '3800'
+var port = process.env.PORTPROD || '80'
 // Le indicamos a Mongoose que haremos la conexión con Promesas
 mongoose.Promise = global.Promise
 // Usamos el método connect para conectarnos a nuestra base de datos con el fichero env. Podría pasarse también la cadena de conexión directamente
-mongoose.connect(process.env.DATABASE1DEV, { useNewUrlParser: true, useFindAndModify: false })
+mongoose.connect(process.env.DATABASEPROD, { useNewUrlParser: true, useFindAndModify: false })
     .then(() => {
         // Cuando se realiza la conexión, lanzamos este mensaje por consola
         console.log("La conexión a la base de datos Orcid se ha realizado correctamente")

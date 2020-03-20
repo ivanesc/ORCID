@@ -453,6 +453,5 @@ var getOneMemberWorks = async (req, res, next) => {
 module.exports = {
     parserRegistroInfoOrcidContrPrincipal,
     getAllMemberWorks,
-    getOneMemberWorks,
-    getAllJournalMemberWorks2018
+    getOneMemberWorks
 }
